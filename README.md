@@ -14,11 +14,11 @@ The objective of this project is to analyze and determine whether the new additi
 - [Inroduction](#Inroduction)
 - [Project Requirements and Prerequisites](#Project-Requirements-and-Prerequisites)
 - [Methodology](#Methodology)
-  - [1. Data Preparation with SQL](#1.-Data-Preparation-with-SQL)
-  - [2. Data Preprocessing with Python](#2.-Data-Preprocessing-with-Python)
-  - [3. Data Analysis with Excel](#3.-Data-Analysis-with-Excel)
-  - [4. Dependencies and Probabilities](#4.-Dependencies-and-Probabilities)
-  - [5. Data Prediction with Python](#5.-Data-Prediction-with-Python)
+  - [1 Data Preparation with SQL](#1-Data-Preparation-with-SQL)
+  - [2 Data Preprocessing with Python](#2-Data-Preprocessing-with-Python)
+  - [3 Data Analysis with Excel](#3-Data-Analysis-with-Excel)
+  - [4 Dependencies and Probabilities](#4-Dependencies-and-Probabilities)
+  - [5 Data Prediction with Python](#5-Data-Prediction-with-Python)
 - [Conclusion](#Conclusion)
 
 ## Inroduction
@@ -30,19 +30,19 @@ Welcome! This project, "Tracking User Engagement with SQL, Excel, and Python" pa
 ## Methodology
 
 
-### 1. Data Preparation with SQL
+### 1 Data Preparation with SQL
 
 
-### 2. Data Preprocessing with Python
+### 2 Data Preprocessing with Python
 
 
-### 3. Data Analysis with Excel
+### 3 Data Analysis with Excel
 
 
-### 4. Dependencies and Probabilities
+### 4 Dependencies and Probabilities
 
 
-### 5. Data Prediction with Python
+### 5 Data Prediction with Python
 
 
 ## Conclusion
