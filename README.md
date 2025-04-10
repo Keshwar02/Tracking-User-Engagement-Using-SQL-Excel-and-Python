@@ -1,4 +1,5 @@
 # Tracking User Engagement : Project Overview
+The objective of this project is to analyze and determine whether the new additions to the platform (new courses, exams, and career tracks) have increased student engagement between Q2 2021 and Q2 2022
 
 - Leveraged SQL queries to retrieve relevant data from the database which was then exported as CSV files for subsequent analysis
 - Examined the data distribution of key variables and addressing outliers to minimize potential skewness, and subsequently saved the cleaned datasets as CSV files for furthur analysis
@@ -7,7 +8,8 @@
 - Determined if watching a lecture in Q2 2021 and Q2 2022 are dependent or independent events. and calculated the probability of a student watching a lecture in Q2 2021, given they watched one in Q2 2022
 - Built a model to predict number of certificates issued based on the total minutes watched
 ***
-##
+## Inroduction
+
 
 
 
