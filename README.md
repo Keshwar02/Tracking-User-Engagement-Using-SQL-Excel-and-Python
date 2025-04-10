@@ -21,11 +21,52 @@ The objective of this project is to analyze and determine whether the new additi
   - [5 Data Prediction with Python](#5-Data-Prediction-with-Python)
 - [Conclusion](#Conclusion)
 
+***
+
 ## Inroduction
 Welcome! This project, "Tracking User Engagement with SQL, Excel, and Python" part of the 365datascience projects, aims to analyze whether new additions(new courses, exams, and career tracks) to the platform – including enrolling in career tracks, testing knowledge through practice, course, and career track exams, and an expanded course library – have increased student engagement. By comparing different metrics, we can measure the effectiveness of these features and overall user engagement. The first half of 2022 was expected to be profitable for the company due to the hypothesized increase in student engagement following the release of these features on the website in late 2021.
 
 ## Project Requirements and Prerequisites
+This project requires the following tools and software packages:
 
+### Tools:
+
+- `MySQL Workbench 8.0 (or later)`: Required for retrieving relevant data from the database
+- `Microsoft Excel 2007 (or later)`: Required for performing hypothesis testing
+- `Python 3`: Necessary for data analysis and prediction tasks
+
+### Python Packages:
+
+- `numpy`, `pandas`: For data manipulation and analysis
+- `matplotlib`, `seaborn (optional)`: For data visualization
+- `statsmodels`: For statistical modeling, and hypothesis testing
+- `scikit-learn (sklearn)`: For performing linear regression and other machine learning tasks
+
+### Cloning the Repository and Installing Python Dependencies:
+
+1. Open terminal or command prompt and navigate to the directory where you want to store the project
+```bash
+cd directory_name
+```
+
+2. Run the code below to `clone the repository`
+```bash
+git clone https://github.com/Keshwar02/Tracking-User-Engagement-Using-SQL-Excel-and-Python.git
+```
+
+3. Navigate to the project directory. This is necessary so that subsequent commands(like installing dependencies) are executed within the context of the project
+```bash
+cd repository_name
+```
+
+4. Installing Python Dependencies
+```bash
+pip install numpy pandas matplotlib seaborn statsmodels scikit-learn
+```
+
+### Data:
+
+- Execute the `initial_setup.sql` file in MySQL Workbench, which will create several tables required for our analysis. Then we write SQL queries to retrieve the specific data needed for our analysis from these tables.
 
 ## Methodology
 
