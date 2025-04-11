@@ -70,7 +70,22 @@ This part of the project aims to retrieve the relevant information for our analy
 
 
 ### 2 Data Preprocessing with Python
-This part of the project aims to 
+We have successfully extracted the data necessary for our analysis. 
+
+This part of the project aims to clean and preprocess data. we will look if there are any inconsistencies in data and deal with them. The only problem with the data is that it is right skewed, which signifies there are outliers in our data. we need to effectively deal with the outliers as outliers can distort statistical tests and regression models.
+
+1. Plotting the distributions
+<p text-align:center>
+  <img src='Images/img1.png'>
+</p>
+
+2. Removing the outliers
+- We remove outliers by keeping the data below 99th percentile
+- With the help of conditional filtering, we can remove outliers based on quantile values
+```python
+df1 = df1[df1['minutes_watched']<df1_99_quantile]
+```
+We do the same to all the remaining tables and 
 
 ### 3 Data Analysis with Excel
 
@@ -79,7 +94,7 @@ This part of the project aims to
 
 
 ### 5 Data Prediction with Python
-
+This is the Final part of the project, here we build a model 
 
 ## Conclusion
 
