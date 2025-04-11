@@ -60,13 +60,74 @@ pip install numpy pandas matplotlib seaborn statsmodels scikit-learn
 ### Data:
 - Execute the `initial_setup.sql` file in MySQL Workbench, which will create several tables required for our analysis. Then we write SQL queries to retrieve the specific data needed for our analysis from these tables.
 
+
+
 ## Methodology
 
 
 ### 1 Data Preparation with SQL
-This part of the project aims to retrieve the relevant information for our analysis. This is achieved by writing SQL queries, we export the result-sets obtained as CSV files. These CSV files will be crucial for subsequent analytical tasks, such as calculating confidence intervals, performing hypothesis testing, and building a model
+This part of the project aims to retrieve the relevant information from database for our analysis. This is achieved by writing SQL queries, we export the result-sets obtained as CSV files. These CSV files will be crucial for subsequent analytical tasks, such as calculating confidence intervals, performing hypothesis testing, and building a model
+
+**Data Description**
+- `student_certificates`: This table had following features-Holder(student ID) and issuance date of certificates issued in Q2 2022
+- `student_info`: This table has following features-Student ID and registration date of students registered between January 1, 2020 and June 30, 2022
+- `student_purchases`: This table has following features-student ID, product type, purchase date, and refund date(if applicable) of purchases mage between January 1, 2020 and June 30, 2022
+- `student_video_watched`: This table has-student watching (student_id), time_watched, and date of course watched in Q2 2021 and Q2 2022
+  
+The data we currently have is not in a format that is suitable for our analysis. Therefore, we leverage MySQL's `CASE`, `IF` functions, `JOINS`, `GROUP BY`, `HAVING` clauses and views to fetch the relevant result-sets
+
+#### 1. Creating a View:
+- First step in data preparation stage is creating a view with the following columns. we'll use `student_purchases` table
+   - `purchase_id`
+   - `student_id`
+   - `plan_id`
+   - `start_date`
+   - `end_date`
+   - `paid_q2_2021`
+   - `paid_q2_2022`
+- We can leave the first three columns as it is no modifications are needed
+- Rename the `date_purchased` to `start_date` for consistency with subsequent `date_end` column
+- To calculate the `end_date`, add one month, three months, or 12 months to the `start_date` for a Monthly (represented as 0 in the plan_id column), Quarterly (1), or an Annual (2) purchase
+- Re-calculate the `end_date` column if a refund occured, the subscription end date should be `refund_date` instead of calcualted `end_date`
+- Creating two columns (i.e., paid_q2_2021 and paid_q2_2022) last 2 columns contain binary values indicating wheather a student had an active subscription during the respective year's second quater(April 1 to June 30, inclusive), A `0` in the column indicates a free-plan student in Q2, while a `1` represents an actve subscription in that period.
+
+#### 2. Splitting into Periods:
+Created a view in the schema called `purcahses_info`, which stores information about students subscriptions. Now we'll utilize `purchases_info` to classify students as free-plan and paying in Q2 2021 and Q2 2022
+
+- First, we calculate total minutes watched in Q2 2021 and Q2 2022 seperately. also we want to identify which users were paid subscribers during each of these periods
+  <p text-align:center>
+    <img src='Images/img1.png'>
+  </p>
+- Then, Create a 'paid' column to do this we join the above query with `purchases_info` view whcih we have created to classify users as free-plan and paid in Q2 2021 and Q2 2022. The result-set will have following columns:
+- `student_id`
+- `minutes_watched`
+- `paid_in_q2`
+- The last column indicates wheather a student had an active subscription in Q2 or not
+  <p text-align:center>
+    <img src='Images/img2.png'>
+  </p>
+- By changing these 3 values `paid_q2_2021/2022`, `YEAR(date_watched) = 2021/2022`, and `paid_in_q2_2021 = 0/1`  we will obtain the following result-sets which we will export as CSV files
+  - Students engaged in Q2 2021 who haven’t had a paid subscription in Q2 2021 (minutes_watched_2021_paid_0.csv)
+  - Students engaged in Q2 2022 who haven’t had a paid subscription in Q2 2022 (minutes_watched_2022_paid_0.csv)
+  - Students engaged in Q2 2021 who have been paid subscribers in Q2 2021 (minutes_watched_2021_paid_1.csv)
+  - Students engaged in Q2 2022 who have been paid subscribers in Q2 2022 (minutes_watched_2022_paid_1.csv)
 
 
+#### 3. Certificates Issued:
+
+We have succesfully retrieved the data necessary for calculating confidence interval of average minutes watched for free-plan and paid users in Q2 2021 and Q2 2022, hypothesis testing, and Assessing Event Dependencies and calculating probabilities. 
+
+Now we'll retrieve information on minutes watched and certificates issued to students. We'll study the correlation between these two metrics. and use this data to build a regression model. This is the final part of data preparation or extraction task
+
+- For this, we consider only the students who've been issued a certificate. We extract the following information for each student:
+  - `student_id`
+  - `total_minutes_watched`
+  - `total_no_of_certificates_issued`
+- First, we create a sub-query that aggregates the number of certificates each student has been issued and store them in column called `certificates_issued`
+- Then, join the sub-query with the `student_video_watched` table and select all the records from sub-query, and calculate the number of minutes watched and store the result in a column called `minutes_watched`
+  <p text-align:center>
+    <img src='Images/img3.png'>
+  </p>
 
 
 ### 2 Data Preprocessing with Python
@@ -74,18 +135,28 @@ We have successfully extracted the data necessary for our analysis.
 
 This part of the project aims to clean and preprocess data. we will look if there are any inconsistencies in data and deal with them. The only problem with the data is that it is right skewed, which signifies there are outliers in our data. we need to effectively deal with the outliers as outliers can distort statistical tests and regression models.
 
-1. Plotting the distributions
+#### 1. Plotting the distributions
 <p text-align:center>
-  <img src='Images/img1.png'>
+  <img src='Images/img4.png'>
 </p>
 
-2. Removing the outliers
+#### 2. Removing the outliers
 - We remove outliers by keeping the data below 99th percentile
 - With the help of conditional filtering, we can remove outliers based on quantile values
 ```python
 df1 = df1[df1['minutes_watched']<df1_99_quantile]
+df2 = df2[df2['minutes_watched']<df2_99_quantile]
+df3 = df3[df3['minutes_watched']<df3_99_quantile]
+df4 = df4[df4['minutes_watched']<df4_99_quantile]
 ```
-We do the same to all the remaining tables and 
+Once we've retrived the final datasets, we save them as four seperate CSV files
+```python
+df1.to_csv('minutes_watched_2021_paid_0_no_outliers.csv',index=False)
+df2.to_csv('minutes_watched_2022_paid_0_no_outliers.csv',index=False)
+df3.to_csv('minutes_watched_2021_paid_1_no_outliers.csv',index=False)
+df4.to_csv('minutes_watched_2022_paid_1_no_outliers.csv',index=False)
+```
+We're done with Data Extraction and Data Preprocessing.
 
 ### 3 Data Analysis with Excel
 
