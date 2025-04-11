@@ -95,7 +95,7 @@ The data we currently have is not in a format that is suitable for our analysis.
 Created a view in the schema called `purcahses_info`, which stores information about students subscriptions. Now we'll utilize `purchases_info` to classify students as free-plan and paying in Q2 2021 and Q2 2022
 
 - First, we calculate total minutes watched in Q2 2021 and Q2 2022 seperately. also we want to identify which users were paid subscribers during each of these periods
-  <p text-align:center>
+  <p align=center>
     <img src='Images/img1.png'>
   </p>
 - Then, Create a 'paid' column to do this we join the above query with `purchases_info` view whcih we have created to classify users as free-plan and paid in Q2 2021 and Q2 2022. The result-set will have following columns:
@@ -103,7 +103,7 @@ Created a view in the schema called `purcahses_info`, which stores information a
 - `minutes_watched`
 - `paid_in_q2`
 - The last column indicates wheather a student had an active subscription in Q2 or not
-  <p text-align:center>
+  <p align=center>
     <img src='Images/img2.png'>
   </p>
 - By changing these 3 values `paid_q2_2021/2022`, `YEAR(date_watched) = 2021/2022`, and `paid_in_q2_2021 = 0/1`  we will obtain the following result-sets which we will export as CSV files
@@ -125,7 +125,7 @@ Now we'll retrieve information on minutes watched and certificates issued to stu
   - `total_no_of_certificates_issued`
 - First, we create a sub-query that aggregates the number of certificates each student has been issued and store them in column called `certificates_issued`
 - Then, join the sub-query with the `student_video_watched` table and select all the records from sub-query, and calculate the number of minutes watched and store the result in a column called `minutes_watched`
-  <p text-align:center>
+  <p align=center>
     <img src='Images/img3.png'>
   </p>
 
@@ -133,10 +133,10 @@ Now we'll retrieve information on minutes watched and certificates issued to stu
 ### 2 Data Preprocessing with Python
 We have successfully extracted the data necessary for our analysis. 
 
-This part of the project aims to clean and preprocess data. we will look if there are any inconsistencies in data and deal with them. The only problem with the data is that it is right skewed, which signifies there are outliers in our data. we need to effectively deal with the outliers as outliers can distort statistical tests and regression models.
+This part of the project focuses on data cleaning and preprocessing. We will examine the data for inconsistencies and address them. A key issue identified is the right skewness, indicating the presence of outliers. Effectively handling these outliers is crucial as they can distort statistical tests and regression model.
 
 #### 1. Plotting the distributions
-<p text-align:center>
+<p align=center>
   <img src='Images/img4.png'>
 </p>
 
@@ -159,7 +159,73 @@ df4.to_csv('minutes_watched_2022_paid_1_no_outliers.csv',index=False)
 We're done with Data Extraction and Data Preprocessing.
 
 ### 3 Data Analysis with Excel
+In this part, we calculate confidence intervals of "average minutes watched" for "free and paid" users in "Q2 2021 and Q2 2022" and perform hypothesis to verify wheather there's a statistically significant differnce in student engagement between Q2 2021 and Q2 2022
 
+#### 1. Calculating Mean and Median 
+
+We compare these metrics to see how engagement changed from Q2 2021 to Q2 2022 for free-plan and paying students
+
+<p align=center>
+  <img src='Images/img5.png'>
+</p>
+
+- For free-plan students who watched in Q2 2021, the mean minutes watched are significantly higher than the median. This suggests a right-skewed distribution, indicating that a few students watched much more than others
+- A similar situation is observed for free-plan students who watched in Q2 2022, with the mean being higher than the median, indicating right skewness
+- The same applies to paying students who watched in Q2 2021 and those who watched in Q2 2022, where the mean is higher than the median, indicating right skewness
+
+#### 2. Calculating Confidence Intervals
+1. Determine the size of sample(n)
+2. Calculate sample standard deviation
+3. Calculate the standaed error (SE): Divide standard deviation by the sqrt of sample size
+4. Calculate the margin of error(MoE): critical value for a 95% confidence interval is 1.96. Multiply this by standard error(SE)
+5. Calculate the confidence interval(CI): `Mean - MoE` for lower bound and `Mean + MoE` for upper bound
+
+#### 3. Performing Hypothesis Testing
+
+Hypothesis testing helps us objectively determine whether the observed differences in engagement are due to the new features or if they occurred by chance. By analyzing this, we can make data-driven decisions about whether the new platform features were effective in increasing student engagement.
+
+1. **Formulate Null and Alternative Hypotheses**
+   - **Null Hypothesis(Ho):** The engagement in Q2 2021 is higher than or equal to the one in 2022
+   - **Alternative Hypothesis(H1)**: The engagement in Q2 2021 is lower than the one in Q2 2022
+
+2. **Perform t-test**
+   - There are 2 ways to do this
+     1. Excel's built-in t-test from Analysis Toolpack or
+     2. Doing manually
+   - We will do it manually
+     
+**For Free-plan students**
+
+  <p align=center>
+   <img src='Images/img6.png'>
+  </p>
+  
+- First, calculate the pooled variance
+- Then, calculate the t-statistic(formula for t-statistic in a two-sample t-test with equal variances)
+- Lookup for the critical t-value
+- Compare t-statistic to critical value
+  
+  <p align=center>
+    <img src='Images/img7.png'>
+  </p>
+  
+As the t-statistic is less than the critical value we reject the null hypothesis. This is because the negative t-statistic indicates that (the mean minutes watched by students in Q2 2021) is significantly smaller than (the mean minutes watched by students in Q2 2022)
+
+**For Paying students**
+
+  <p align=center>
+    <img src='Images/img8.png'>
+  </p>
+  
+- Calculate the t-statistic (where the variances are assumed unequal)
+- Lookup for critical value
+- Compare t-statistic to critical value
+  <p align=center>
+    <img src='Images/img9.png'>
+  </p>
+
+As the t-statisticis greater than the critical value we fail to reject the null hypothesis. This means there’s not enough evidence to conclude that μ1 is smaller than μ2. So, the data 
+supports the null hypothesis that μ1 is larger than or equal to μ2.
 
 ### 4 Dependencies and Probabilities
 
