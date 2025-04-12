@@ -7,7 +7,7 @@ The objective of this project is to analyze and determine whether the new additi
 - Calculated the correlation between minutes watched and certificates issued to find out if longer engagement means more certificates
 - Determined if watching a lecture in Q2 2021 and Q2 2022 are dependent or independent events. and calculated the probability of a student watching a lecture in Q2 2021, given they watched one in Q2 2022
 - Built a model to predict number of certificates issued based on the total minutes watched
-
+***
 ## Table of Contents
 - [Inroduction](#Inroduction)
 - [Project Requirements and Prerequisites](#Project-Requirements-and-Prerequisites)
@@ -18,10 +18,10 @@ The objective of this project is to analyze and determine whether the new additi
   - [4 Dependencies and Probabilities](#4-Dependencies-and-Probabilities)
   - [5 Data Prediction with Python](#5-Data-Prediction-with-Python)
 - [Conclusion](#Conclusion)
-
+***
 ## Inroduction
 Welcome! This project, "Tracking User Engagement with SQL, Excel, and Python" part of the 365datascience projects, aims to analyze and determine whether new additions(new courses, exams, and career tracks) have increased student engagement between Q2 2021 and Q2 2022 – new additions include enrolling in career tracks, testing knowledge through practice, course, and career track exams, and an expanded course library. By comparing different metrics, we can measure the effectiveness of these features and overall user engagement. The first half of 2022 was expected to be profitable for the company due to the hypothesized increase in student engagement following the release of these features on the website in late 2021.
-
+***
 ## Project Requirements and Prerequisites
 This project requires the following tools and software packages:
 
@@ -59,11 +59,8 @@ pip install numpy pandas matplotlib seaborn statsmodels scikit-learn
 
 ### Data:
 - Execute the `initial_setup.sql` file in MySQL Workbench, which will create several tables required for our analysis. Then we write SQL queries to retrieve the specific data needed for our analysis from these tables.
-
-
-
+***
 ## Methodology
-
 
 ### 1 Data Preparation with SQL
 This part of the project aims to retrieve the relevant information from database for our analysis. This is achieved by writing SQL queries, we export the result-sets obtained as CSV files. These CSV files will be crucial for subsequent analytical tasks, such as calculating confidence intervals, performing hypothesis testing, and building a model
@@ -128,8 +125,7 @@ Now we'll retrieve information on minutes watched and certificates issued to stu
   <p align=center>
     <img src='Images/img3.png'>
   </p>
-
-
+***
 ### 2 Data Preprocessing with Python
 We have successfully extracted the data necessary for our analysis. 
 
@@ -157,7 +153,7 @@ df3.to_csv('minutes_watched_2021_paid_1_no_outliers.csv',index=False)
 df4.to_csv('minutes_watched_2022_paid_1_no_outliers.csv',index=False)
 ```
 We're done with Data Extraction and Data Preprocessing.
-
+***
 ### 3 Data Analysis with Excel
 In this part, we calculate confidence intervals of "average minutes watched" for "free and paid" users in "Q2 2021 and Q2 2022" and perform hypothesis to verify wheather there's a statistically significant differnce in student engagement between Q2 2021 and Q2 2022
 
@@ -246,7 +242,7 @@ By understanding these relationships, we can determine which factors are most st
   <p align=center>
     <img src='Images/img10.png'>
   </p>
-
+***
 ### 4 Dependencies and Probabilities
 In this part of the project, we rely on probability theory to address these 2 questions
 1. Determine if watching a lecture in Q2 2021 and Q2 2022 are dependent or independent events
@@ -293,7 +289,7 @@ Two events are said to be independent if `P(A∩B)` is equal to `P(A)×P(B)` whe
   </p>
 
 From the results, we can conclude that students who watched a lecture in Q2 2022, 7% had also watched a lecture in Q2 2021
-
+***
 ### 5 Data Prediction with Python
 This is the Final part of the project, here we aim to build a linear regression model to predict number of certificates issued based on student engagement. 
 
@@ -308,20 +304,40 @@ To Predict number of certificates(`certificates_issued`) earned based on total m
 - There are some `NULL` values in the data
   - We can either fill them with mean or median or
   - Drop rows with NULL values
-
-#### 3. Define 
-#### 4.
-#### 5. Model for Prediction
+- Defining the input and target variable
+  - `minutes_watcehd` is our predictor
+  - `certificates_issued` is our target variable
+- Splitting data into training and testing sets
+  - 80% for training and 20% for testing
+- Reshape the data
+  - `Scikit-learn` Expects 2D Arrays for Features: Most machine learning models in scikit-learn expect the input features (x_train, x_test) to be in a 2-dimensional array.
+  
+#### 3. Model for Prediction
 
 We choose simple `Linear Regression` for our task
-#### 6.
-#### 7.
-#### 8.
-#### 9.
 
+#### 4. Creating and training model
+#### 5. Look at the intercept and slope
+#### 6. Calculate R-squared value
+#### 7. Make a prediction
 
+lets predict if someone had watched 1200 minutes of video, how many certificates will be issued
+```python
+reg.predict([[1200]]) # reg is instance of model
+```
+
+Based on the R-squared value we obtained. This suggests that 30% of the variability in the target variable is explained by the input variable(i.e., toal minutes watched). This model does not account for the other 70%
+
+The model, therefore, provides some insight into the relationship between these two quantities, but there’s still a large portion of the variance that remains unexplained. The number of minutes watched is reasonable to include when predicting the number of certificates issued but should not be the sole factor considered
+***
 ## Conclusion
-
-
+We can draw the following conclusions from our analysis:
+1. **Student Engagement Distribution**
+   - Across all groups (Free-plan and paying 
+2. **Average Student Engagement difference**
+   
+3. **Hypothesis Testing**
+   
+4. **Correlation Analysis**
 
 
