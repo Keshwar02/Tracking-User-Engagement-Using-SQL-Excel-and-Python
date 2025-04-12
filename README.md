@@ -227,11 +227,98 @@ As the t-statistic is less than the critical value we reject the null hypothesis
 As the t-statisticis greater than the critical value we fail to reject the null hypothesis. This means there’s not enough evidence to conclude that μ1 is smaller than μ2. So, the data 
 supports the null hypothesis that μ1 is larger than or equal to μ2.
 
-### 4 Dependencies and Probabilities
+#### 4. Calculating Correlation Coefficients
 
+We'll calcaulate the correlation coefficient between the minutes watched and the certificates issued, to understand the relationship between engagement metrics
+
+By understanding these relationships, we can determine which factors are most strongly associated with student engagement
+
+**Steps for calculating correlation**
+1. Choose the variables
+2. Calculate the correlation
+   - `CORREL(arr1,arr2)` function for Pearson's correlation between 2 sets of data
+3. Interpret the correlation coefficients
+   - Closer the value to 1 or -1 stronger the relationship, closer the value to 0 weaker the relationship or no relationship
+4. Visualise the correlation matrix
+   - `scatter plots` to visualize the relationship between 2 variables
+   - `Correlation Matrix Heatmaps` to visualize the correlation coefficients between multiple variables in a matrix format
+ 
+  <p align=center>
+    <img src='Images/img10.png'>
+  </p>
+
+### 4 Dependencies and Probabilities
+In this part of the project, we rely on probability theory to address these 2 questions
+1. Determine if watching a lecture in Q2 2021 and Q2 2022 are dependent or independent events
+2. What is the probability that a student has watched a lecture in Q2 2021, given that they’ve watched a lecture in Q2 2022
+
+We do not have the necessary information with us to assess event dependency and calculate the probability. So, the first task is to get the data we need from `data_scientist_project` database. We need the following information/data to answer questions mentioned above
+- Count of the students who have watched a lecture in Q2 2021
+- Count of the students who have watched a lecture in Q2 2022
+- Count of students who have watched a lecture on the platform
+- Count of students who watched a lecture in Q2 2021 and Q2 2022
+We will leverage SQL queries to extract data
+
+#### 1. Assessing Event Dependency
+
+**Determine if watching a lecture in Q2 2021 and Q2 2022 are dependent or independent events**
+
+`Event A`: A student watched a lecture in Q2 2021
+`Event B`: A student watcehd a lecture in Q2 2022
+
+Two events are said to be independent if `P(A∩B)` is equal to `P(A)×P(B)` where:
+- `P(A∩B)` is the probability of both A and B occuring
+- `P(A)` is the probability of A accuring
+- `P(B)` is the probability of B accuring
+
+  <p align=center>
+    <img src='Images/img11.png'>
+  </p>
+
+`P(A∩B)` is not equal to  `P(A)*P(B)` which means 2 events `Event A` and `Event B` are dependent (the occurrence of one event has some influence on the occurance of the other. Since `P(A)*P(B)` is larger than `P(A∩B)` it suggests that those who watched a lecture in Q2 2021 were less likely to watch a lecture in Q2 2022
+  
+#### 2. Calculating the Probability
+
+**What is the probability that a student has watched a lecture in Q2 2021, given that they’ve watched a lecture in Q2 2022**
+
+`Event A`: A student watched a lecture in Q2 2021
+`Event B`: A student watcehd a lecture in Q2 2022
+
+- `P(A)` is the probability of A accuring
+- `P(B)` is the probability of B accuring
+- `P(B|A)` is the probability that a student watcehd a video in Q2 2022, given they watcehd a video in Q2 2021
+
+  <p align=center>
+    <img src='Images/img12.png'>
+  </p>
+
+From the results, we can conclude that students who watched a lecture in Q2 2022, 7% had also watched a lecture in Q2 2021
 
 ### 5 Data Prediction with Python
-This is the Final part of the project, here we build a model 
+This is the Final part of the project, here we aim to build a linear regression model to predict number of certificates issued based on student engagement. 
+
+For this task we use `minutes_and_certificates.csv` file which we have extracted in Data Preparation phase
+
+#### 1. Objective
+
+To Predict number of certificates(`certificates_issued`) earned based on total minutes watched(`minutes_watched`)
+
+#### 2. Data Preprocessing
+- Before cleaning and preprocessing data we copy the data to a variable. Which acts as a checkpoint
+- There are some `NULL` values in the data
+  - We can either fill them with mean or median or
+  - Drop rows with NULL values
+
+#### 3. Define 
+#### 4.
+#### 5. Model for Prediction
+
+We choose simple `Linear Regression` for our task
+#### 6.
+#### 7.
+#### 8.
+#### 9.
+
 
 ## Conclusion
 
