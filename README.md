@@ -181,7 +181,7 @@ We compare these metrics to see how engagement changed from Q2 2021 to Q2 2022 f
 Hypothesis testing helps us objectively determine whether the observed differences in engagement are due to the new features or if they occurred by chance. By analyzing this, we can make data-driven decisions about whether the new platform features were effective in increasing student engagement.
 
 1. **Formulate Null and Alternative Hypotheses**
-   - **Null Hypothesis(Ho):** The engagement in Q2 2021 is higher than or equal to the one in 2022
+   - **Null Hypothesis(Ho):** The engagement in Q2 2021 is higher than or equal to the one in Q2 2022
    - **Alternative Hypothesis(H1)**: The engagement in Q2 2021 is lower than the one in Q2 2022
 
 2. **Perform t-test**
@@ -333,11 +333,22 @@ The model, therefore, provides some insight into the relationship between these 
 ## Conclusion
 We can draw the following conclusions from our analysis:
 1. **Student Engagement Distribution**
-   - Across all groups (Free-plan and paying 
+   - Across all groups (Free-plan and Paying students) in Q2 2021 and Q2 2022. Mean is higher than the medain. Which indicates a right-skewed distribution, meaning a small number of students watched significantly more content than the majority in each group
+    
 2. **Average Student Engagement difference**
-   
+   - Free-plan students average engagement increased from Q2 2021 to Q2 2022 from `14.21` minutes in to `16.04` minutes
+   - Whereas, paying students engagement decreased from Q2 2021 to Q2 2022 from `360.10` minutes in to `292.22` minutes
+     
 3. **Hypothesis Testing**
    
+   `Null Hypothesis`: The engagement of students in Q2 2021 is higher than or equal to the one in 2022
+   - For Free-plan students, t-statistic was `-3.95` and critical value `1.645`. As t-statistic is less than the critical value we reject the null hypothesis. which indicaes the student engagement in Q2 2021 is lower than student engagement Q2 2022
+   - For paying studednts,t-statistic was `5.23` and critical value `1.645`. As t-statistic is greater than the critical value we fail to reject the null hypothesis. which indicates the student engagement in Q2 2021 is not lower than student engagement Q2 2022
+     
 4. **Correlation Analysis**
+   - The correlation of `0.51` indicates that students with higher watch times tend to earn more certificates
+
+We can conclude the new features boosted engagement for free-plan students, unlike paid subscribers there is a decline in engangement. Our findings suggest the new additions to the platform were more effective for non-paying users. The statistical tests support a positive change for free users but not for paid ones. This highlights a different impact of the new additions across user types.
+
 
 
